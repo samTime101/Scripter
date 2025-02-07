@@ -1,22 +1,23 @@
-import keyboard
-import threading
 
+import keyboard
 lines = ""
 
 
 def write(line_count , no_of_lines):
-    # TODO
-    #listen constantly to keyboard keystroke and when user press CTRL set the current line to 1
-    global lines 
+    global lines
     print(line_count,no_of_lines)
     print(f"Default line count {no_of_lines}")
     print(f"Buffer Length {len(lines)}")
     print("press CTRL key to set line to 1")
     print("start typing")
     print("--------------------------------------")
-    while line_count > 0:
-        if keyboard.is_pressed('ctrl'):
+    def on_ctrl_event(e):
+        nonlocal line_count
+        if e.name == 'ctrl':
             line_count = 1
+    
+    keyboard.on_press(on_ctrl_event)
+    while line_count > 0:
         lines += input() + "\n"
         line_count -= 1
         if line_count == 0:
@@ -31,18 +32,17 @@ def write(line_count , no_of_lines):
     
 def main():
     global lines
-
     while True:
         event = input("'n' to write ,'s' to save ,  'v' to view buffer , 'q' to exit: ")
         if event == 's' and (len(lines)>1):
             filename = input("filename>")
             path = input("path>")
             try:
-                with open(f"{path}{filename}", "w") as file:
+                with open(f"{path}{filename}", "w",encoding='utf-8') as file:
                     file.write(lines)
                     print("Saved the content\nBuffer is cleared")
-            except Exception as e:
-                print(e)
+            except  (OSError, FileExistsError)  as error:
+                print(error)
         elif event == 'v' and len(lines) > 1:
             print(lines)
         elif event == 'q':
@@ -55,3 +55,4 @@ def main():
     
 if __name__=="__main__":
     main()
+
