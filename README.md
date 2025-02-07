@@ -1,6 +1,6 @@
 ### Scripter
 
-`sudo python3 main.py`
+`python3 main.py`
 
 ## Preview(not latest)
 

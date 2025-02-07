@@ -3,8 +3,8 @@ imports: keyboard for listening to CTRL
 readline for navigating cursor in a line
 '''
 import readline
-import keyboard
-
+# import keyboard
+from pynput import keyboard
 lines = ""
 
 def write(line_count , no_of_lines):
@@ -20,11 +20,18 @@ def write(line_count , no_of_lines):
     print("press CTRL key to set line to 1")
     print("start typing")
     print("--------------------------------------")
-    def on_ctrl_event(event):
+    # def on_ctrl_event(event):
+    #     nonlocal line_count
+    #     if event.name == 'ctrl':
+    #         line_count = 1
+    # keyboard.on_press(on_ctrl_event)
+    def on_release(key):
         nonlocal line_count
-        if event.name == 'ctrl':
+        if key == keyboard.Key.ctrl:
             line_count = 1
-    keyboard.on_press(on_ctrl_event)
+    # with keyboard.Listener(on_release=on_press) as listener:listener.join()
+    listener = keyboard.Listener(on_release=on_release)
+    listener.start()
     while line_count > 0:
         lines += input() + "\n"
         line_count -= 1
