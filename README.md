@@ -1,3 +1,7 @@
+### Scripter
+
+`sudo python3 main.py`
+
 ## Preview
 
 https://github.com/user-attachments/assets/c3b34479-4d90-4fde-8aca-a1a31792218c

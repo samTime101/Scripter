@@ -13,10 +13,12 @@ def check_key():
             print("\nline count = 1")
             stop_input = True
             line_count = 1
+            stop_input = False
             break
 
 def write():
-    global line_count , no_of_lines , lines
+    global line_count , no_of_lines , lines , stop_input
+    print(line_count,no_of_lines)
     key_thread = threading.Thread(target=check_key, daemon=True)
     key_thread.start()
     print("Welcome to Scripter\nVersion: 0.0\nAuthor:samip regmi")
@@ -40,7 +42,7 @@ def write():
                 line_count += inc_line
     
 def main():
-    global lines
+    global lines ,  no_of_lines , line_count
     while True:
         event = input("'n' to write ,'s' to save ,  'v' to view buffer , 'q' to exit: ")
         if event == 's' and (len(lines)>1):
@@ -49,15 +51,20 @@ def main():
             try:
                 with open(f"{path}{filename}", "w") as file:
                     file.write(lines)
+                    lines = ""
+                    no_of_lines = 5
+                    line_count =  no_of_lines
                     print("Saved the content\nBuffer is cleared")
             except Exception as e:
                 print(e)
-        elif event == 'v':
+        elif event == 'v' and len(lines) > 1:
             print(lines)
         elif event == 'q':
             break
         elif event == "n":
             lines = ""
+            no_of_lines = 5
+            line_count =  no_of_lines
             write()
         else:
             print(f"Current Buffer length: {len(lines)} must be > than 1")
