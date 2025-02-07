@@ -1,36 +1,22 @@
 import keyboard
 import threading
 
-# no_of_lines = 5
-# line_count = no_of_lines
 lines = ""
-stop_input = False
 
-def check_key():
-    global stop_input, line_count
-    while True:
-        if keyboard.is_pressed('ctrl'):
-            print("\nline count = 1")
-            stop_input = True
-            line_count = 1
-            # stop_input = False
-            break
 
-def write(line_count, no_of_lines ):
-    # global line_count , no_of_lines , lines , stop_input
-    global lines
+def write(line_count , no_of_lines):
+    # TODO
+    #listen constantly to keyboard keystroke and when user press CTRL set the current line to 1
+    global lines 
     print(line_count,no_of_lines)
-    key_thread = threading.Thread(target=check_key, daemon=True)
-    key_thread.start()
-    print("Welcome to Scripter\nVersion: 0.0\nAuthor:samip regmi")
     print(f"Default line count {no_of_lines}")
     print(f"Buffer Length {len(lines)}")
     print("press CTRL key to set line to 1")
     print("start typing")
     print("--------------------------------------")
     while line_count > 0:
-        if stop_input:
-            break
+        if keyboard.is_pressed('ctrl'):
+            line_count = 1
         lines += input() + "\n"
         line_count -= 1
         if line_count == 0:
@@ -45,6 +31,7 @@ def write(line_count, no_of_lines ):
     
 def main():
     global lines
+
     while True:
         event = input("'n' to write ,'s' to save ,  'v' to view buffer , 'q' to exit: ")
         if event == 's' and (len(lines)>1):
