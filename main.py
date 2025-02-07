@@ -1,9 +1,18 @@
-
+'''
+imports: keyboard for listening to CTRL
+readline for navigating cursor in a line
+'''
+import readline
 import keyboard
+
 lines = ""
 
-
 def write(line_count , no_of_lines):
+    '''
+    function:write
+    parameters:line_count,no_of_lines
+    returns:none
+    '''
     global lines
     print(line_count,no_of_lines)
     print(f"Default line count {no_of_lines}")
@@ -11,11 +20,10 @@ def write(line_count , no_of_lines):
     print("press CTRL key to set line to 1")
     print("start typing")
     print("--------------------------------------")
-    def on_ctrl_event(e):
+    def on_ctrl_event(event):
         nonlocal line_count
-        if e.name == 'ctrl':
+        if event.name == 'ctrl':
             line_count = 1
-    
     keyboard.on_press(on_ctrl_event)
     while line_count > 0:
         lines += input() + "\n"
@@ -29,8 +37,12 @@ def write(line_count , no_of_lines):
             if inc_line > 0:
                 no_of_lines += inc_line
                 line_count += inc_line
-    
 def main():
+    '''
+    function:main
+    returns:none
+    main entry point
+    '''
     global lines
     while True:
         event = input("'n' to write ,'s' to save ,  'v' to view buffer , 'q' to exit: ")
@@ -52,7 +64,6 @@ def main():
             write(5,5)
         else:
             print(f"Current Buffer length: {len(lines)} must be > than 1")
-    
+
 if __name__=="__main__":
     main()
-
