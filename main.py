@@ -1,8 +1,8 @@
 import keyboard
 import threading
 
-no_of_lines = 5
-line_count = no_of_lines
+# no_of_lines = 5
+# line_count = no_of_lines
 lines = ""
 stop_input = False
 
@@ -13,16 +13,18 @@ def check_key():
             print("\nline count = 1")
             stop_input = True
             line_count = 1
-            stop_input = False
+            # stop_input = False
             break
 
-def write():
-    global line_count , no_of_lines , lines , stop_input
+def write(line_count, no_of_lines ):
+    # global line_count , no_of_lines , lines , stop_input
+    global lines
     print(line_count,no_of_lines)
     key_thread = threading.Thread(target=check_key, daemon=True)
     key_thread.start()
     print("Welcome to Scripter\nVersion: 0.0\nAuthor:samip regmi")
     print(f"Default line count {no_of_lines}")
+    print(f"Buffer Length {len(lines)}")
     print("press CTRL key to set line to 1")
     print("start typing")
     print("--------------------------------------")
@@ -42,7 +44,7 @@ def write():
                 line_count += inc_line
     
 def main():
-    global lines ,  no_of_lines , line_count
+    global lines
     while True:
         event = input("'n' to write ,'s' to save ,  'v' to view buffer , 'q' to exit: ")
         if event == 's' and (len(lines)>1):
@@ -51,9 +53,6 @@ def main():
             try:
                 with open(f"{path}{filename}", "w") as file:
                     file.write(lines)
-                    lines = ""
-                    no_of_lines = 5
-                    line_count =  no_of_lines
                     print("Saved the content\nBuffer is cleared")
             except Exception as e:
                 print(e)
@@ -63,9 +62,7 @@ def main():
             break
         elif event == "n":
             lines = ""
-            no_of_lines = 5
-            line_count =  no_of_lines
-            write()
+            write(5,5)
         else:
             print(f"Current Buffer length: {len(lines)} must be > than 1")
     
