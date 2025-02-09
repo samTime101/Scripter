@@ -70,9 +70,6 @@ def write(line_count, no_of_lines):
 
 
 def open_in_buffer(line_count, no_of_lines, file_content):
-    global listener
-    if listener:
-        listener.stop()
     global lines
 
     def on_release(key):
@@ -82,12 +79,13 @@ def open_in_buffer(line_count, no_of_lines, file_content):
 
     def on_press(key):
         if key == keyboard.Key.up:
+
             move_cursor_up()
         if key == keyboard.Key.down:
             move_cursor_down()
 
-    listener = keyboard.Listener(on_release=on_release, on_press=on_press)
-    listener.start()
+    listener1 = keyboard.Listener(on_release=on_release, on_press=on_press)
+    listener1.start()
     for i in file_content:
         lines += i
     print(lines)
@@ -131,9 +129,10 @@ def main():
                 listener.stop()
             break
         elif event == "n":
-            line = ""
+            lines = ""
             write(5, 5)
         elif event == "o":
+            lines = ""
             filename = input("filename>")
             path = input("path>")
             try:
