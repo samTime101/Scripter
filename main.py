@@ -70,6 +70,10 @@ def write(line_count, no_of_lines):
 
 
 def open_in_buffer(line_count, no_of_lines, file_content):
+    '''
+    function: open_in_buffer
+    parameters: line_count , no_of_lines, file_content
+    '''
     global lines
 
     def on_release(key):
